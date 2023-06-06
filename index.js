@@ -45,7 +45,7 @@ const sendinBlueAdapter = options => {
 
     /**
      * @function replaceVariables
-     * @description Replace the email, application's name, and link variables with
+     * @description Replace the email, application's name, and link variables
      * with the correct value into the given text
      */
     const replaceVariables = (text, mail) => {
@@ -56,7 +56,7 @@ const sendinBlueAdapter = options => {
             result = result.replace("%LINK%", mail.link);
             result = result.replace("%LINK_SHORT%", mail.link.replace(/^https?:\/\//i, ""));
             result = result.replace("USERNAME", mail.user.get("username"));
-            result = result.repace("HOST_URL", options.hostUrl || "");
+            result = result.replace("HOST_URL", options.hostUrl || "");
         }
         return result;
     };
@@ -95,9 +95,9 @@ const sendinBlueAdapter = options => {
             sendSmtpEmail.to = [{email, name}];
             sendSmtpEmail.templateId = templateId;
             sendSmtpEmail.params = {
-                "APP_NAME": mail.appName,
-                "LINK": mail.link,
-                "LINK_SHORT": mail.link.replace(/^https?:\/\//i, ""),
+                "%APP_NAME%": mail.appName,
+                "%LINK%": mail.link,
+                "%LINK_SHORT%": mail.link.replace(/^https?:\/\//i, ""),
                 "USERNAME": mail.user.get("username"),
                 "HOST_URL": options.hostUrl || "",
             };

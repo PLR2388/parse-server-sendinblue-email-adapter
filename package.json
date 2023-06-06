@@ -1,11 +1,11 @@
 {
-  "name": "@seeck/parse-server-sendinblue-email-adapter",
-  "version": "1.0.6",
+  "name": "@plr2388/parse-server-sendinblue-email-adapter",
+  "version": "1.0.0",
   "description": "Used to send Parse Server password reset and validation emails through SendinBlue",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SEECK-IO/parse-server-sendinblue-email-adapter.git"
+    "url": "git+https://github.com/PLR2388/parse-server-sendinblue-email-adapter.git"
   },
   "keywords": [
     "parse",
@@ -13,17 +13,18 @@
     "email-adapter",
     "sendinblue"
   ],
-  "author": "SEECK",
+  "author": "plr2388",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SEECK-IO/parse-server-sendinblue-email-adapter/issues"
+    "url": "https://github.com/PLR2388/parse-server-sendinblue-email-adapter/issues"
   },
-  "homepage": "https://github.com/SEECK-IO/parse-server-sendinblue-email-adapter#readme",
+  "homepage": "https://github.com/PLR2388/parse-server-sendinblue-email-adapter#readme",
   "dependencies": {
-    "sib-api-v3-sdk": "^8.2.1"
+    "sib-api-v3-sdk": "^8.5.0"
   },
   "devDependencies": {
-    "jasmine-node": "^1.14.5"
+    "jasmine-node": "^3.0.0",
+    "eslint": "^8.42.0"
   },
   "scripts": {
     "test": "jasmine-node spec"

@@ -1,7 +1,7 @@
-This is a fork from Kira2/parse-server-sendinblue-adapter, the original repo stopped working and maintainance. Now you can use this repo instead.
+This is a fork from  @seeck/parse-server-sendinblue-email-adapter, the original repo stopped working and maintainance. Now you can use this repo instead.
 
 # @seeck/parse-server-sendinblue-email-adapter
-Used to send Parse Server password reset emails, and verification emails through SendinBlue
+Used to send Parse Server password reset emails, and verification emails through Brevo
 
 ### Installation
 ```

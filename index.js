@@ -101,7 +101,7 @@ const sendinBlueAdapter = options => {
             };
 
             return new Promise((resolve, reject) => {
-                smtpApi.sendTemplate(templateId, sendEmail).then(resolve, reject);
+                smtpApi.sendTestTemplate(templateId, sendEmail).then(resolve, reject);
             })["catch"]((e) => {
                 console.log(e);
                 throw e;

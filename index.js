@@ -68,6 +68,7 @@ const sendinBlueAdapter = options => {
     const sendLink = (mail, opts, templates, subjects, textParts, htmlParts) => {
         // lookup for email in username field if email is undefined
         const email = mail.user.get("email") || mail.user.get("username");
+        const name = mail.user.get("firstName") || mail.user.get("username");
 
         // look if a locale field is defined for the User class
         let locale = options.translation["default"];
@@ -89,10 +90,11 @@ const sendinBlueAdapter = options => {
 
             // construct and send the request to SendinBlue
             const smtpApi = new SendinBlueSdk.TransactionalEmailsApi();
-            const sendEmail = new SendinBlueSdk.SendTestEmail();
+            const sendSmtpEmail = new SendinBlueSdk.SendSmtpEmail();
 
-            sendEmail.emailTo = [email];
-            sendEmail.attributes = {
+            sendSmtpEmail.to = [{email, name}];
+            sendSmtpEmail.templateId = templateId;
+            sendSmtpEmail.params = {
                 "APP_NAME": mail.appName,
                 "LINK": mail.link,
                 "LINK_SHORT": mail.link.replace(/^https?:\/\//i, ""),
@@ -101,7 +103,7 @@ const sendinBlueAdapter = options => {
             };
 
             return new Promise((resolve, reject) => {
-                smtpApi.sendTestTemplate(templateId, sendEmail).then(resolve, reject);
+                smtpApi.sendTransacEmail(sendSmtpEmail).then(resolve, reject);
             })["catch"]((e) => {
                 console.log(e);
                 throw e;

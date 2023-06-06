@@ -89,7 +89,7 @@ const sendinBlueAdapter = options => {
 
             // construct and send the request to SendinBlue
             const smtpApi = new SendinBlueSdk.TransactionalEmailsApi();
-            const sendEmail = new SendinBlueSdk.SendEmail();
+            const sendEmail = new SendinBlueSdk.SendTestEmail();
 
             sendEmail.emailTo = [email];
             sendEmail.attributes = {

@@ -1,6 +1,6 @@
 {
   "name": "@plr2388/parse-server-sendinblue-email-adapter",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Used to send Parse Server password reset and validation emails through SendinBlue",
   "main": "index.js",
   "repository": {

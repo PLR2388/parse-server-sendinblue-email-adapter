@@ -95,11 +95,11 @@ const sendinBlueAdapter = options => {
             sendSmtpEmail.to = [{email, name}];
             sendSmtpEmail.templateId = templateId;
             sendSmtpEmail.params = {
-                "%APP_NAME%": mail.appName,
-                "%LINK%": mail.link,
-                "%LINK_SHORT%": mail.link.replace(/^https?:\/\//i, ""),
-                "USERNAME": mail.user.get("username"),
-                "HOST_URL": options.hostUrl || "",
+                "appName": mail.appName,
+                "link": mail.link,
+                "linkShort": mail.link.replace(/^https?:\/\//i, ""),
+                "username": mail.user.get("username"),
+                "hostUrl": options.hostUrl || "",
             };
 
             return new Promise((resolve, reject) => {

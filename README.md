@@ -44,20 +44,20 @@ var api = new ParseServer({
       // 1. set the subject here, according to the languages you support.
       // Required only if passwordResetTemplateId is not defined.
       passwordResetSubject: {
-        en: "Reset My Password on %APP_NAME%",
-        fr: "Réinitialiser mon mot de passe sur %APP_NAME%"
+        en: "Reset My Password on {{ params.appName }}",
+        fr: "Réinitialiser mon mot de passe sur {{ params.appName }}"
       },
       // 2. set the plain text part here, according to the languages you support.
       // Required only if passwordResetTemplateId is not defined.
       passwordResetTextPart: {
-        en: "Hello,\n\nYou requested to reset your password for %APP_NAME%.\n\nPlease, click here to set a new password: %LINK%",
-        fr: "Bonjour,\n\nVous avez demandé la réinitialiser de votre mot de passe pour %APP_NAME%.\n\nMerci de cliquer ici pour choisir un nouveau mot de passe : %LINK%"
+        en: "Hello,\n\nYou requested to reset your password for {{ params.appName }}.\n\nPlease, click here to set a new password: {{ params.link }}",
+        fr: "Bonjour,\n\nVous avez demandé la réinitialiser de votre mot de passe pour {{ params.appName }}.\n\nMerci de cliquer ici pour choisir un nouveau mot de passe : {{ params.link }}"
       },
       // 3. set the html text part here, according to the languages you support.
       // Required only if passwordResetTemplateId is not defined.
       passwordResetHtmlPart: {
-        en: "Hi,<p>You requested to reset your password for <b>%APP_NAME%</b>.</p><p>Please, click <a href=\"%LINK%\">here</a> to set a new password.</p>",
-        fr: "Bonjour,<p>Vous avez demandé la réinitialiser de votre mot de passe pour <b>%APP_NAME%</b>.</p><p>Merci de cliquer <a href=\"%LINK%\">ici</a> pour choisir un nouveau mot de passe.</p>"
+        en: "Hi,<p>You requested to reset your password for <b>{{ params.appName }}</b>.</p><p>Please, click <a href=\"{{ params.link }}\">here</a> to set a new password.</p>",
+        fr: "Bonjour,<p>Vous avez demandé la réinitialiser de votre mot de passe pour <b>{{ params.appName }}</b>.</p><p>Merci de cliquer <a href=\"{{ params.link }}\">ici</a> pour choisir un nouveau mot de passe.</p>"
       },
 
       /**
@@ -79,14 +79,14 @@ var api = new ParseServer({
       // 2. set the plain text part here, according to the languages you support.
       // Required only if verificationEmailTemplateId is not defined.
       verificationEmailTextPart: {
-        en: "Hi,\n\nYou are being asked to confirm the e-mail address {EMAIL} with %APP_NAME%\n\nClick here to confirm it: %LINK%",
-        fr: "Bonjour,\n\nMerci de confirmer l'adresse e-mail {EMAIL} avec %APP_NAME%\n\nCliquez ici pour confirmer : %LINK%"
+        en: "Hi,\n\nYou are being asked to confirm the e-mail address {{ params.email }} with {{ params.appName }}\n\nClick here to confirm it: {{ params.link }}",
+        fr: "Bonjour,\n\nMerci de confirmer l'adresse e-mail {{ params.email }} avec {{ params.appName }}\n\nCliquez ici pour confirmer : {{ params.link }}"
       },
       // 3. set the html text part here, according to the languages you support.
       // Required only if verificationEmailTemplateId is not defined.
       verificationEmailHtmlPart: {
-        en: "Hi,<p>You are being asked to confirm the e-mail address {EMAIL} with <b>%APP_NAME%</b></p><p>Click <a href=\"%LINK%\">here</a> to confirm it.</p>",
-        fr: "Bonjour,<p>Merci de confirmer l'adresse e-mail {EMAIL} avec <b>%APP_NAME%</b></p><p>Cliquez <a href=\"%LINK%\">ici</a> pour confirmer.</p>"
+        en: "Hi,<p>You are being asked to confirm the e-mail address {{ params.email }} with <b>{{ params.appName }}</b></p><p>Click <a href=\"{{ params.link }}\">here</a> to confirm it.</p>",
+        fr: "Bonjour,<p>Merci de confirmer l'adresse e-mail {{ params.email }} avec <b>{{ params.appName }}</b></p><p>Cliquez <a href=\"{{ params.link }}\">ici</a> pour confirmer.</p>"
       },
       
       // Pass host url if you needed (optional)
@@ -116,7 +116,7 @@ var api = new ParseServer({
 
 ### Supported variables
 
-The following variables in a template are replaced by their associated value automatically
+The following variables in a template or a text in ParseServer options are replaced by their associated value automatically:
 
  - {{ params.email }}
  - {{ params.appName }}
@@ -157,8 +157,8 @@ verificationEmailTemplateId: {
 ```javascript
 // The subjects of the emails sent to reset password
 passwordResetSubject: {
-  en: "Reset My Password on %APP_NAME%", // the subject to for english user
-  fr: "Réinitialiser mon mot de passe sur %APP_NAME%" // the subject to for french user
+  en: "Reset My Password on {{ params.appName }}", // the subject to for english user
+  fr: "Réinitialiser mon mot de passe sur {{ params.appName }}" // the subject to for french user
 }
 ```
 

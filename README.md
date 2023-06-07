@@ -1,11 +1,11 @@
-This is a fork from  @seeck/parse-server-sendinblue-email-adapter, the original repo stopped working and maintainance. Now you can use this repo instead.
+This is a fork from  @seeck/parse-server-sendinblue-email-adapter
 
-# @seeck/parse-server-sendinblue-email-adapter
-Used to send Parse Server password reset emails, and verification emails through Brevo
+# @plr2388/parse-server-sendinblue-email-adapter
+Used to send Parse Server password reset emails, and verification emails through Brevo (formerly Sendinblue)
 
 ### Installation
 ```
-npm install @seeck/parse-server-sendinblue-email-adapter --save
+npm install @plr2388/parse-server-sendinblue-email-adapter --save
 ```
 
 ### Configuration
@@ -16,7 +16,7 @@ var api = new ParseServer({
   appName: "My App",
   // The options for the email adapter
   emailAdapter: {
-    module: "@seeck/parse-server-sendinblue-adapter",
+    module: "@plr2388/parse-server-sendinblue-adapter",
     options: {
       // The API key of the SendinBlue account (required)
       // WARNING: USE ENVIRONMENT VARIABLE HERE !!! DO NOT EXPOSE YOUR API_KEY !!!
@@ -114,9 +114,20 @@ var api = new ParseServer({
 });
 ```
 
-The variables **{EMAIL}**, **%APP_NAME%** and **%LINK%** are automatically replaced with the email of the recipient, the name you provided for your application and the link to reset the password or to verify the email.
+### Supported variables
 
-It may happen, when you use a button into your templates for example, that SendinBlue prefixes automatically the link with a scheme (http:// or https://). In this case, use **%LINK_SHORT%** instead of **%LINK%** into your template.
+The following variables in a template are replaced by their associated value automatically
+
+ - {{ params.email }}
+ - {{ params.appName }}
+ - {{ params.link }}
+ - {{ params.linkShort }}
+ - {{ params.username }}
+ - {{ params.hostUrl }}
+
+The variables **{{ params.email }}**, **{{ params.appName }}** and **{{ params.link }}** are automatically replaced with the email of the recipient, the name you provided for your application and the link to reset the password or to verify the email. Note that one space after **{{** et before **}}** is required.
+
+It may happen, when you use a button into your templates for example, that SendinBlue prefixes automatically the link with a scheme (http:// or https://). In this case, use **{{ params.linkShort }}** instead of **{{ params.link }}** into your template.
 
 You can use either templates, or texts to send the emails to reset password or to verify the account.
 

@@ -51,12 +51,12 @@ const sendinBlueAdapter = options => {
     const replaceVariables = (text, mail) => {
         let result = text;
         if (result) {
-            result = result.replace("{EMAIL}", mail.to);
-            result = result.replace("%APP_NAME%", mail.appName);
-            result = result.replace("%LINK%", mail.link);
-            result = result.replace("%LINK_SHORT%", mail.link.replace(/^https?:\/\//i, ""));
-            result = result.replace("USERNAME", mail.user.get("username"));
-            result = result.replace("HOST_URL", options.hostUrl || "");
+            result = result.replace("{{ params.email }}", mail.to);
+            result = result.replace("{{ params.appName }}", mail.appName);
+            result = result.replace("{{ params.link }}", mail.link);
+            result = result.replace("{{ params.linkShort }}", mail.link.replace(/^https?:\/\//i, ""));
+            result = result.replace("{{ params.username }}", mail.user.get("username"));
+            result = result.replace("{{ params.hostUrl }}", options.hostUrl || "");
         }
         return result;
     };

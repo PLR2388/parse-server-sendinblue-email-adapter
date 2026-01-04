@@ -1,7 +1,10 @@
-This is a fork from  @seeck/parse-server-sendinblue-email-adapter
+This is a fork from @seeck/parse-server-sendinblue-email-adapter
 
 # @plr2388/parse-server-sendinblue-email-adapter
-Used to send Parse Server password reset emails, and verification emails through Brevo (formerly Sendinblue)
+
+Used to send Parse Server password reset emails and verification emails through [Brevo](https://www.brevo.com/) (formerly SendinBlue).
+
+> **Note:** This adapter uses the official `@getbrevo/brevo` SDK.
 
 ### Installation
 ```
@@ -18,9 +21,9 @@ var api = new ParseServer({
   emailAdapter: {
     module: "@plr2388/parse-server-sendinblue-adapter",
     options: {
-      // The API key of the SendinBlue account (required)
+      // The API key of your Brevo account (required)
       // WARNING: USE ENVIRONMENT VARIABLE HERE !!! DO NOT EXPOSE YOUR API_KEY !!!
-      apiKey: "YOUR_SENDINBLUE_API_KEY",
+      apiKey: "YOUR_BREVO_API_KEY",
       // The default sender name (required)
       fromName: "The Sender",
       // The default sender email address (required)
@@ -35,7 +38,7 @@ var api = new ParseServer({
        * Options for the reset password emails
        */
 
-      // Set it to use templates of the SendinBlue account (optional)
+      // Set it to use templates from your Brevo account (optional)
       passwordResetTemplateId: {
         en: 12345,  // the template id to use for english user
         fr: 67890   // the template id to use for french user
@@ -64,7 +67,7 @@ var api = new ParseServer({
        * Options for the email verification emails
        */
 
-      // Set it to use templates of the SendinBlue account (optional)
+      // Set it to use templates from your Brevo account (optional)
       verificationEmailTemplateId: {
         en: 12345,  // the template id to use for english user
         fr: 67890   // the template id to use for french user
@@ -127,7 +130,7 @@ The following variables in a template or a text in ParseServer options are repla
 
 The variables **{{ params.email }}**, **{{ params.appName }}** and **{{ params.link }}** are automatically replaced with the email of the recipient, the name you provided for your application and the link to reset the password or to verify the email. Note that one space after **{{** et before **}}** is required.
 
-It may happen, when you use a button into your templates for example, that SendinBlue prefixes automatically the link with a scheme (http:// or https://). In this case, use **{{ params.linkShort }}** instead of **{{ params.link }}** into your template.
+It may happen, when you use a button in your templates for example, that Brevo prefixes the link automatically with a scheme (http:// or https://). In this case, use **{{ params.linkShort }}** instead of **{{ params.link }}** in your template.
 
 You can use either templates, or texts to send the emails to reset password or to verify the account.
 
@@ -165,8 +168,13 @@ passwordResetSubject: {
 Same thing for the texts : passwordResetTextPart, passwordResetHtmlPart, verificationEmailSubject, verificationEmailTextPart, verificationEmailHtmlPart.
 
 ### Tests
-The test file spec/sendinblue_adapter_spec.js is here to allow you to test the module without deploying a parse-server. It tests several settings: with templates, with plain/html text etc. You will have to update the variables into the **customization part** of the file to test the emails by your own. Use your own SendinBlue account, your own templates and your own email addresses. Once you correctly set the variables, you receive the 20 tests emails by running this command:
+
+The test file `spec/sendinblue_adapter_spec.js` allows you to test the module without deploying a parse-server. It tests several configurations: with templates, with plain/html text, etc.
+
+To run integration tests that actually send emails, update the variables in the **customization part** of the test file with your own Brevo account credentials, template IDs, and email addresses. Then run:
 
 ```
 npm test
 ```
+
+**Note:** Without valid Brevo API credentials, only the configuration validation tests (12 tests) will pass. The integration tests (20 tests) require a valid API key to send actual emails.

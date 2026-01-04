@@ -1,9 +1,8 @@
 /**
  * @module SendinBlue adapter for parse-server
- * @description Used to send reset password and verification emails through SendinBlue
+ * @description Used to send reset password and verification emails through SendinBlue/Brevo
  */
-const SendinBlueSdk = require("sib-api-v3-sdk");
-const SendinBlueClient = SendinBlueSdk.ApiClient.instance;
+const brevo = require("@getbrevo/brevo");
 
 const sendinBlueAdapter = options => {
     // check the required options
@@ -28,8 +27,8 @@ const sendinBlueAdapter = options => {
         throw "If verificationEmailTemplateId is not set, you have to define verificationEmailSubject, verificationEmailTextPart and verificationEmailHtmlPart.";
     }
 
-    const SendinBlueApiKey = SendinBlueClient.authentications["api-key"];
-    SendinBlueApiKey.apiKey = options.apiKey;
+    // Store API key for use in API instances
+    const apiKey = options.apiKey;
 
     /**
      * @function getOptions
@@ -88,9 +87,10 @@ const sendinBlueAdapter = options => {
                 templateId = templates[options.translation["default"]];
             }
 
-            // construct and send the request to SendinBlue
-            const smtpApi = new SendinBlueSdk.TransactionalEmailsApi();
-            const sendSmtpEmail = new SendinBlueSdk.SendSmtpEmail();
+            // construct and send the request to Brevo
+            const smtpApi = new brevo.TransactionalEmailsApi();
+            smtpApi.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
+            const sendSmtpEmail = new brevo.SendSmtpEmail();
 
             sendSmtpEmail.to = [{email, name}];
             sendSmtpEmail.templateId = templateId;
@@ -157,19 +157,17 @@ const sendinBlueAdapter = options => {
         const text = replaceVariables(mail.text, mail);
         const html = replaceVariables(mail.html, mail);
 
-        // construct and send the request to SendinBlue
-        const smtpApi = new SendinBlueSdk.TransactionalEmailsApi();
-        const sendSmtpEmail = new SendinBlueSdk.SendSmtpEmail();
+        // construct and send the request to Brevo
+        const smtpApi = new brevo.TransactionalEmailsApi();
+        smtpApi.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
 
-        const sender = new SendinBlueSdk.SendSmtpEmailSender();
-        sender.name = opts.fromName;
-        sender.email = opts.fromEmail;
+        sendSmtpEmail.sender = {
+            name: opts.fromName,
+            email: opts.fromEmail
+        };
 
-        const to = new SendinBlueSdk.SendSmtpEmailTo();
-        to.email = mail.to;
-
-        sendSmtpEmail.sender = sender;
-        sendSmtpEmail.to = [to];
+        sendSmtpEmail.to = [{email: mail.to}];
         sendSmtpEmail.subject = subject;
         sendSmtpEmail.textContent = text;
         sendSmtpEmail.htmlContent = html;
